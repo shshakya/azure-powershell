@@ -58,7 +58,7 @@ $storageAccount = New-AzStorageAccount -ResourceGroupName 'ContosoOrg' -Name 'co
 $container = New-AzStorageContainer -Name 'contosocontainer' -Context $storageAccount.Context -Permission blob
 ```
 
-## Upload Cloud Service package (cspkg) to Atorage Account
+## Upload Cloud Service package (cspkg) to Storage Account
 
 Upload cloud service package (cspkg) to storage account, later SAS URL of the package will be generated which will be used for creating cloud service.
 
@@ -92,7 +92,7 @@ Above you have created resources which are required to create a cloud service. N
 
 ### Create an OS Profile
 
-Create an OS Profile in-memory object. OS Profile spcecifies the certificates which are assosiated to cloud service roles. Over here you will use the certificates that was created in previous steps.
+Create an OS Profile in-memory object. OS Profile specifies the certificates which are assosiated to cloud service roles. Over here you will use the certificates that was created in previous steps.
 
 ```powershell
 $certificate = Get-AzKeyVaultCertificate -VaultName 'ContosoKeyVault' -Name 'ContosoCert'
@@ -137,13 +137,13 @@ $extensions = @($rdpExtension, $genevaExtension)
 
 ### Add Tags to your Cloud Service
 
-Define Tags as PowerShell hash-map which you want to add to your cloud service.
+Define Tags as PowerShell hash table which you want to add to your cloud service.
 
 ```powershell
 $tag=@{"Owner" = "Contoso"; "Client" = "PowerShell"}
 ```
 
-### Read Configuration (cscfg) file and generate Package (cspkg) SAS URL
+### Read configuration (cscfg) file and generate package (cspkg) SAS URL
 
 Read cloud service configuration (cscfg) file and generated the SAS URL of cloud service packge (cspkg) that was uploaded to storage account in previous steps.
 
@@ -178,9 +178,9 @@ $cloudService = New-AzCloudService `
 
 ## Get Remote Desktop File
 
-Get the RDP file using Get-AzCloudServiceRoleInstanceRemoteDesktopFile cmdlet and login into the role instance using the credentials specified while creating RDP extension.<br>
+Get the RDP file using Get-AzCloudServiceRoleInstanceRemoteDesktopFile. Login into the role instance using the credentials specified while creating RDP extension.<br>
 
-In this examples RDP extension is installed on all role instances, thus you can get RDP file for any of the role instance. In below command we are downloading RDP file for WebRole instance 0.
+In this example RDP extension is installed on all role instances, thus you can get RDP file for any of the role instance. In below command we are downloading RDP file for WebRole instance 0.
 
 ```powershell
 Get-AzCloudServiceRoleInstanceRemoteDesktopFile -ResourceGroupName "ContosoOrg" -CloudServiceName "ContosoCS" -RoleInstanceName "WebRole_IN_0" -OutFile "C:\temp\WebRole_IN_0.rdp"

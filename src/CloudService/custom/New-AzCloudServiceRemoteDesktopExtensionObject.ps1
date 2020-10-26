@@ -39,7 +39,9 @@ function New-AzCloudServiceRemoteDesktopExtensionObject {
     [Parameter(HelpMessage="Remote Desktop Extension version.")]
     [string] $TypeHandlerVersion,
 	
-    [string[]] $RolesAppliedTo
+    [string[]] $RolesAppliedTo,
+	
+	[Boolean] $AutoUpgradeMinorVersion
   )
 
   process {
@@ -49,6 +51,6 @@ function New-AzCloudServiceRemoteDesktopExtensionObject {
     $rdpSetting = "<PublicConfig><UserName>" + $Credential.UserName + "</UserName><Expiration>" + $Expiration +"</Expiration></PublicConfig>";
     $rdpProtectedSetting = "<PrivateConfig><Password>"+ $Credential.Password + "</Password></PrivateConfig>";
 
-    return New-AzCloudServiceExtensionObject -Name $Name -Publisher $RDPPublisher -Type $RDPExtensionType -TypeHandlerVersion $TypeHandlerVersion -Setting $rdpSetting -ProtectedSetting $rdpProtectedSetting -RolesAppliedTo $RolesAppliedTo
+    return New-AzCloudServiceExtensionObject -Name $Name -Publisher $RDPPublisher -Type $RDPExtensionType -TypeHandlerVersion $TypeHandlerVersion -Setting $rdpSetting -ProtectedSetting $rdpProtectedSetting -RolesAppliedTo $RolesAppliedTo -AutoUpgradeMinorVersion $AutoUpgradeMinorVersion
   }
 }
