@@ -14,7 +14,7 @@ pool:
 
 steps:
 - task: PowerShell@2
-  displayName: 'Set Up Environment'
+  displayName: 'Set up Environment'
   inputs:
     targetType: 'inline'
     script: |
@@ -23,19 +23,6 @@ steps:
       git config --global core.longpaths true
       # Wipe any changes from a previous branch
       git clean -xdf
-
-- task: DotNetCoreCLI@2
-  displayName: 'Build'
-  inputs:
-    command: custom
-    custom: msbuild
-    arguments: 'build.proj /t:"Build" /p:"Configuration=Release"'
-  
-- task: PowerShell@2
-  displayName: 'Bump Version'
-  inputs:
-    filePath: 'tools\RunVersionController.ps1'
-    arguments: '-Release "$(MonthName) $(Year)"'
 
 - task: PowerShell@2
   displayName: 'Install platyPS'
@@ -54,7 +41,14 @@ steps:
   inputs:
     command: custom
     custom: msbuild
-    arguments: 'build.proj /t:Build;GenerateHelp;StaticAnalysis /p:Configuration=Release'
+    arguments: 'build.proj /t:"Build" /p:"Configuration=Release"'
+  
+- task: PowerShell@2
+  displayName: 'Bump Version'
+  inputs:
+    filePath: 'tools\RunVersionController.ps1'
+    arguments: '-Release "$(MonthName) $(Year)"'
+    pwsh: true
 
 - task: EsrpCodeSigning@1
   displayName: Dll Signing [Authenticode + Strong Name]
