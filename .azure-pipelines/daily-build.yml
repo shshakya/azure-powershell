@@ -14,7 +14,7 @@ pool:
 
 steps:
 - task: PowerShell@2
-  displayName: 'Install platyPS'
+  displayName: 'Set Up Environment'
   inputs:
     targetType: 'inline'
     script: |
@@ -32,11 +32,10 @@ steps:
     arguments: 'build.proj /t:"Build" /p:"Configuration=Release"'
   
 - task: PowerShell@2
-  displayName: 'Install platyPS'
+  displayName: 'Bump Version'
   inputs:
     filePath: 'tools\RunVersionController.ps1'
     arguments: '-Release "$(MonthName) $(Year)"'
-    pwsh: true
 
 - task: PowerShell@2
   displayName: 'Install platyPS'
