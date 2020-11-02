@@ -50,7 +50,7 @@ steps:
     arguments: '-Release "$(MonthName) $(Year)"'
     pwsh: true
 
-- task: EsrpCodeSigning@1
+- task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
   displayName: Dll Signing [Authenticode + Strong Name]
   inputs:
     ConnectedServiceName: '$(signServiceConnection)'
