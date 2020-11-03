@@ -50,8 +50,7 @@ steps:
     arguments: '-Release "$(MonthName) $(Year)"'
     pwsh: true
 
-- task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
-  displayName: Dll Signing [Authenticode + Strong Name]
+- task: EsrpCodeSigning@1
   inputs:
     ConnectedServiceName: '$(signServiceConnection)'
     FolderPath: 'artifacts'
@@ -62,6 +61,7 @@ steps:
       Release/**/Microsoft.Azure.PowerShell.Authentication.ResourceManager.dll
       Release/**/Microsoft.Azure.PowerShell.Authenticators.dll
       !Release/**/Microsoft*Azure*PowerShell*Cmdlets*.Test.dll
+    UseMinimatch: true
     signConfigType: 'inlineSignParams'
     inlineOperation: |
       [
