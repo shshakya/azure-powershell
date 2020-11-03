@@ -37,6 +37,7 @@ steps:
       git config --global core.longpaths true
       # Wipe any changes from a previous branch
       git clean -xdf
+    pwsh: true
 
 - task: DotNetCoreCLI@2
   displayName: 'Build'
