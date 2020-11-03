@@ -24,7 +24,9 @@ steps:
   displayName: 'Install PowerShellGet [v2.1.3 has a Publish-Module bug]'
   inputs:
     targetType: inline
-    script: 'Install-Module PowerShellGet -Force -Confirm:$false -Scope CurrentUser -SkipPublisherCheck'
+    script: |
+      Install-Module -Repository PSGallery -Name PowerShellGet -Scope CurrentUser -AllowClobber -Force -SkipPublisherCheck
+      Remove-Module PowerShellGet
     pwsh: true
 
 - task: PowerShell@2
