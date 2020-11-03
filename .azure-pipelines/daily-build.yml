@@ -105,11 +105,11 @@ steps:
     MaxRetryAttempts: '5'
 
 - task: DotNetCoreCLI@2
-  displayName: Package
+  displayName: Publish
   inputs:
     command: custom
     custom: msbuild
-    arguments: 'tools\Az.Tools.Installer\build.proj /t:Package'
+    arguments: 'build.proj /t:Publish /p:Configuration=Release;NuGetKey=$(NuGetKey)'
 
 - task: PublishPipelineArtifact@0
   displayName: 'Save artifacts'
