@@ -14,17 +14,6 @@ pool:
 
 steps:
 - task: PowerShell@2
-  displayName: 'Set up Environment'
-  inputs:
-    targetType: 'inline'
-    script: |
-      Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-      # Avoid issue of filename too long
-      git config --global core.longpaths true
-      # Wipe any changes from a previous branch
-      git clean -xdf
-
-- task: PowerShell@2
   displayName: 'Install platyPS'
   inputs:
     targetType: inline
@@ -35,6 +24,17 @@ steps:
   inputs:
     targetType: inline
     script: 'Install-Module PowerShellGet -Force -Confirm:$false -Scope CurrentUser -SkipPublisherCheck'
+
+- task: PowerShell@2
+  displayName: 'Set up Environment'
+  inputs:
+    targetType: 'inline'
+    script: |
+      Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+      # Avoid issue of filename too long
+      git config --global core.longpaths true
+      # Wipe any changes from a previous branch
+      git clean -xdf
 
 - task: DotNetCoreCLI@2
   displayName: 'Build'
